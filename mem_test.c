@@ -19,13 +19,13 @@ int main(void)
 	srand(time(NULL));
 	unsigned long int num;
 	
-	list *first = (list *)malloc(sizeof(list *));
+	list *first = (list *)malloc(100000000);
 	first->index = (rand()%1000)+1;
 	first->next = NULL;
 
 	int i=0;
 	while(1){	
-		list *new = (list *)malloc(sizeof(list *));
+		list *new = (list *)malloc(sizeof(100000000));
 		new->index = (rand()%1000)+1;
 		new->next = NULL;
 		
