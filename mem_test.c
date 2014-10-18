@@ -18,15 +18,17 @@ int main(void)
 {	
 	srand(time(NULL));
 	unsigned long int num;
-	
-	list *first = (list *)malloc(100000000);
-	first->index = (rand()%1000)+1;
+	list *first;
+	//for(int i=0;i<10;i++)
+		first = (list *)malloc(sizeof(list *));
+	first->index = (rand()%1000000)+1;
 	first->next = NULL;
 
-	int i=0;
-	while(1){	
-		list *new = (list *)malloc(sizeof(100000000));
-		new->index = (rand()%1000)+1;
+	while(1){
+		list *new;
+	//	for(int i=0;i<10;i++)	
+			new = (list *)malloc(sizeof(list *));
+		new->index = (rand()%1000000)+1;
 		new->next = NULL;
 		
 
@@ -50,12 +52,11 @@ int main(void)
 
 		first = max(first,new);
 		
-		search = first;
-		while(search!=NULL){
-			printf("%d\n",search->index);
-			search = search->next;
-		}
-		printf("%d\n",i++);
+		//search = first;
+		//while(search!=NULL){
+		//	printf("%d\n",search->index);
+		//	search = search->next;
+		//}
 
 	}
 }
