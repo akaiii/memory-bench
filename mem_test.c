@@ -34,12 +34,13 @@ int main(void)
 	
 	srand(time(NULL));
 	list *first;
+	list *tail;
 	list *search;
 	first = (list *)malloc(sizeof(list *));
 	first->index = num;
 	first->num = rand()%1000000+1;
 	first->next = NULL;
-	
+	tail = first;	
 
 	//insert and sort
 	while(increase!=10000){
@@ -54,14 +55,15 @@ int main(void)
 		if(first->next!=NULL)
 			_next = search->next;
 
-		int i=0;
+		unsigned long int index=0;
 		while(search!=NULL){
 			if(search->next==NULL){
+				new->index = re(new,min(new,search))+index;
 				link(max(search,new),min(search,new));
-
 				break;
 			}
 			if(re(search,max(search,new))&&re(_next,min(_next,new))){
+				new->index = index;
 				link(search,new);
 				link(new,_next);
 				break;
@@ -71,6 +73,7 @@ int main(void)
 				link(new,search);
 				break;
 			}
+			index++;
 			search = search->next;
 			_next = _next->next;
 		}
@@ -88,7 +91,7 @@ int main(void)
 #ifdef swap
 	//use swap
 	while(1){
-		merge_(first,);	
+		merge_(first,0,tail->index);	
 			
 	}
 #endif
