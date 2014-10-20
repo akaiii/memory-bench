@@ -1,1 +1,0 @@
-cmd_/home/akai/code/kprobes/balloon_probe.ko := ld -r -m elf_x86_64 -T /usr/src/kernels/linux-3.12.17/scripts/module-common.lds --build-id  -o /home/akai/code/kprobes/balloon_probe.ko /home/akai/code/kprobes/balloon_probe.o /home/akai/code/kprobes/balloon_probe.mod.o
