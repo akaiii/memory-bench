@@ -3,8 +3,8 @@
 #include <time.h>
 
 //#define test
-#define swap
-#define merge
+//#define swap
+//#define merge
 
 #define max(a,b) \
 	a->num>b->num?a:b
@@ -125,6 +125,9 @@ void merge_(list *l,unsigned long int p,unsigned long int q,unsigned long int r)
 
 	for(j=1;j<=n2;j++)
 		R[j] = find_list(q+j,first);
+
+	L[n1+1] = limit;
+	R[n2+1] = limit;
 
 	j=1;
 	i=1;
