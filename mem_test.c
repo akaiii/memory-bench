@@ -3,6 +3,7 @@
 #include <time.h>
 
 //#define test
+#define swap
 #define merge
 
 #define max(a,b) \
@@ -11,6 +12,7 @@
 #define min(a,b) \
 	a->num<b->num?a:b
 
+#define limit sizeof(unsigned long int)
 
 typedef struct list{
 	unsigned long int index;
@@ -20,10 +22,12 @@ typedef struct list{
 
 inline void link(list *a,list *b){a->next = b;}
 inline int re(list *a,list *b){return (a==b)?1:0;}
+inline unsigned long int find_list(unsigned long int a,list *b)\
+	{while(b->index!=a)b=b->next;return b->index;}
 
 #ifdef merge
-int merge_sort(list *,int,int);
-int merge_(list *,int,int,int);
+void merge_sort(list *,unsigned long int,unsigned long int);
+void merge_(list *,unsigned long int,unsigned long int,unsigned long int);
 #endif
 
 int main(void)
@@ -60,6 +64,7 @@ int main(void)
 			if(search->next==NULL){
 				new->index = re(new,min(new,search))+index;
 				link(max(search,new),min(search,new));
+				tail = min(new,search);
 				break;
 			}
 			if(re(search,max(search,new))&&re(_next,min(_next,new))){
@@ -83,7 +88,7 @@ int main(void)
 #ifdef test
 		search = first;
 		while(search!=NULL){
-			printf("%d\n",search->num);
+			printf("%lu\n",search->num);
 			search = search->next;
 		}
 #endif
@@ -91,63 +96,55 @@ int main(void)
 #ifdef swap
 	//use swap
 	while(1){
-		merge_(first,0,tail->index);	
-			
+		merge_sort(first,0,tail->index);	
 	}
 #endif
 }
 
 #ifdef merge
-int merge_sort(list *l,int p,int r){
+void merge_sort(list *l,unsigned long int p,unsigned long int r){
 	if(p<r){
-		int q = (p+r)/2;
+		unsigned long int q = (p+r)/2;
 		merge_sort(l,p,q);
 		merge_sort(l,q+1,r);
-		merge(l,p,q,r);
+		merge_(l,p,q,r);
 	}
-
-
-	return 0;
 }
 
-int merge_(list *l,int p,int q,int r){
-	int n1 = q-p+1;
-	int n2 = r-q;
+void merge_(list *l,unsigned long int p,unsigned long int q,unsigned long int r){
+	list *first = l;
+	unsigned long int n1 = q-p+1;
+	unsigned long int n2 = r-q;
+	
+	unsigned long int L[n1+1];
+	unsigned long int R[n2+1];
 
-	return 0;
-}
-#endif
+	unsigned long int i,j,k;
+	for(i=1;i<=n1;i++)
+		L[i] = find_list(p+i-1,first);
 
+	for(j=1;j<=n2;j++)
+		R[j] = find_list(q+j,first);
 
+	j=1;
+	i=1;
 
-#ifdef finish
-int partition(int p,int r){
-	int x,i,j,k;
-
-	x=A[r];
-	i=p-1;
-	for (j=p;j<=r-1;j++){
-		if (A[j]<=x){
+	first = l;
+	for(k=p;k<=r;k++){
+		if(L[i]<R[j]){
+			find_list(k,first);
+			first->index = L[i];
+			first = l;
 			i++;
-			k=A[i];
-			A[i]=A[j];
-			A[j]=k;
+		}
+		else{
+			find_list(k,first);
+			first->index = R[i];
+			first = l;
+			j++;
 		}
 	}
-	k=A[i+1];
-	A[i+1]=A[r];
-	A[r]=k;
-	return i+1;
-}
-
-void quicksort(int p,int r){
-	int q;
-
-	if (p<r){
-	   q=partition(p,r); 
-	   quicksort(p,q-1);
-	   quicksort(q+1,r);	
-	}
 }
 #endif
+
 
