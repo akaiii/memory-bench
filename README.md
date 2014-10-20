@@ -1,3 +1,3 @@
-measure memory and probe
+#measure memory and probe
 
-#need to modify tail pointer
+need to modify index and num
