@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include <time.h>
 
-//#define test
-#define swap
-#define merge
+#define test
+//#define swap
+//#define merge
 
 #define max(a,b) \
 	a->num>b->num?a:b
@@ -22,8 +22,9 @@ typedef struct list{
 
 inline void link(list *a,list *b){a->next = b;}
 inline int re(list *a,list *b){return (a==b)?1:0;}
-inline long int find_list(long int a,list *b)\
-	{while(b->index!=a)b=b->next;return b->index;}
+inline long int find_list(long int a,list *b)
+	{while(b->index!=a)b=b->next;
+	return b->num;}
 
 #ifdef merge
 void merge_sort(list *,long int,long int);
@@ -47,10 +48,10 @@ int main(void)
 	tail = first;	
 
 	//insert and sort
-	while(increase!=10000){
+	while(increase!=10){
 		list *new;
 		new = (list *)malloc(sizeof(list *));
-		new->index = num++;
+		new->index = 0;
 		new->num = rand()%1000000+1;
 		new->next = NULL;
 
@@ -74,7 +75,6 @@ int main(void)
 				break;
 			}
 			if(re(new,max(new,search))){
-				new->index = 0;
 				link(new,search);
 				break;
 			}
@@ -88,9 +88,11 @@ int main(void)
 #ifdef test
 		search = first;
 		while(search!=NULL){
-			printf("%lu\n",search->num);
+			printf("num: %lu\n",search->num);
+			printf("index: %lu\n",search->index);
 			search = search->next;
 		}
+		printf("tail: %lu\n",tail->index);
 #endif
 
 #ifdef swap
@@ -136,13 +138,13 @@ void merge_(list *l,long int p,long int q,long int r){
 	for(k=p;k<=r;k++){
 		if(L[i]<R[j]){
 			find_list(k,first);
-			first->index = L[i];
+			first->num = L[i];
 			first = l;
 			i++;
 		}
 		else{
 			find_list(k,first);
-			first->index = R[i];
+			first->num = R[i];
 			first = l;
 			j++;
 		}
