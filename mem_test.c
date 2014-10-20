@@ -3,8 +3,8 @@
 #include <time.h>
 
 //#define test
-//#define swap
-//#define merge
+#define swap
+#define merge
 
 #define max(a,b) \
 	a->num>b->num?a:b
@@ -12,29 +12,29 @@
 #define min(a,b) \
 	a->num<b->num?a:b
 
-#define limit sizeof(unsigned long int)
+#define limit sizeof(long int)
 
 typedef struct list{
-	unsigned long int index;
-	unsigned long int num;
+	long int index;
+	long int num;
 	struct list *next;
 }list;
 
 inline void link(list *a,list *b){a->next = b;}
 inline int re(list *a,list *b){return (a==b)?1:0;}
-inline unsigned long int find_list(unsigned long int a,list *b)\
+inline long int find_list(long int a,list *b)\
 	{while(b->index!=a)b=b->next;return b->index;}
 
 #ifdef merge
-void merge_sort(list *,unsigned long int,unsigned long int);
-void merge_(list *,unsigned long int,unsigned long int,unsigned long int);
+void merge_sort(list *,long int,long int);
+void merge_(list *,long int,long int,long int);
 #endif
 
 int main(void)
 {
 	
-	unsigned long int increase=1;	//increase memory
-	unsigned long int num=0;
+	long int increase=1;	//increase memory
+	long int num=0;
 	
 	srand(time(NULL));
 	list *first;
@@ -59,7 +59,7 @@ int main(void)
 		if(first->next!=NULL)
 			_next = search->next;
 
-		unsigned long int index=0;
+		long int index=0;
 		while(search!=NULL){
 			if(search->next==NULL){
 				new->index = re(new,min(new,search))+index;
@@ -102,24 +102,24 @@ int main(void)
 }
 
 #ifdef merge
-void merge_sort(list *l,unsigned long int p,unsigned long int r){
+void merge_sort(list *l,long int p,long int r){
 	if(p<r){
-		unsigned long int q = (p+r)/2;
+		long int q = (p+r)/2;
 		merge_sort(l,p,q);
 		merge_sort(l,q+1,r);
 		merge_(l,p,q,r);
 	}
 }
 
-void merge_(list *l,unsigned long int p,unsigned long int q,unsigned long int r){
+void merge_(list *l,long int p,long int q,long int r){
 	list *first = l;
-	unsigned long int n1 = q-p+1;
-	unsigned long int n2 = r-q;
+	long int n1 = q-p+1;
+	long int n2 = r-q;
 	
-	unsigned long int L[n1+1];
-	unsigned long int R[n2+1];
+	long int L[n1+1];
+	long int R[n2+1];
 
-	unsigned long int i,j,k;
+	long int i,j,k;
 	for(i=1;i<=n1;i++)
 		L[i] = find_list(p+i-1,first);
 
