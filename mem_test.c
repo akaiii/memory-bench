@@ -3,8 +3,8 @@
 #include <time.h>
 
 #define test
-//#define swap
-//#define merge
+#define swap
+#define merge
 
 #define max(a,b) \
 	a->num>b->num?a:b
@@ -12,7 +12,7 @@
 #define min(a,b) \
 	a->num<b->num?a:b
 
-#define limit sizeof(long int)
+#define limit 999999999999999
 
 typedef struct list{
 	long int index;
@@ -21,10 +21,12 @@ typedef struct list{
 }list;
 
 inline void link(list *a,list *b){a->next = b;}
+inline void revision(list *a,long int b)
+	{while(a!=NULL){a->index+=1;a=a->next;}}
 inline int re(list *a,list *b){return (a==b)?1:0;}
-inline long int find_list(long int a,list *b)
+inline list * find_list(long int a,list *b)
 	{while(b->index!=a)b=b->next;
-	return b->num;}
+	return b;}
 
 #ifdef merge
 void merge_sort(list *,long int,long int);
@@ -35,24 +37,25 @@ int main(void)
 {
 	
 	long int increase=1;	//increase memory
-	long int num=0;
 	
 	srand(time(NULL));
 	list *first;
+	list *prev;
 	list *tail;
 	list *search;
 	first = (list *)malloc(sizeof(list *));
-	first->index = num;
-	first->num = rand()%1000000+1;
+	first->index = 0;
+	first->num = rand()%10000+1;
 	first->next = NULL;
+	prev = first;
 	tail = first;	
 
 	//insert and sort
-	while(increase!=10){
+	while(increase!=1000000000000000){
 		list *new;
 		new = (list *)malloc(sizeof(list *));
 		new->index = 0;
-		new->num = rand()%1000000+1;
+		new->num = rand()%10000+1;
 		new->next = NULL;
 
 		search = first;
@@ -63,26 +66,36 @@ int main(void)
 		long int index=0;
 		while(search!=NULL){
 			if(search->next==NULL){
-				new->index = re(new,min(new,search))+index;
+				//list *temp = max(new,search);
+				new->index = (re(new,min(new,search)))+index;
+				link(max(prev,new),max(search,new));
 				link(max(search,new),min(search,new));
+
+				if(re(new,max(new,search)))
+					revision(search,0);
 				tail = min(new,search);
 				break;
 			}
 			if(re(search,max(search,new))&&re(_next,min(_next,new))){
-				new->index = index;
 				link(search,new);
 				link(new,_next);
+				new->index+=index;
+				revision(new,0);
 				break;
 			}
 			if(re(new,max(new,search))){
+				first = new;
+				revision(search,0);
 				link(new,search);
 				break;
 			}
 			index++;
+			prev = search;
 			search = search->next;
 			_next = _next->next;
 		}
-		first = max(search,new);
+		if(first->next==NULL)
+			first = max(search,new) ; 
 		increase++;
 	}
 #ifdef test
@@ -96,9 +109,21 @@ int main(void)
 #endif
 
 #ifdef swap
+	int i = 0 ;
 	//use swap
-	while(1){
-		merge_sort(first,0,tail->index);	
+	while(i!=1){
+		merge_sort(first,0,tail->index);
+
+#ifdef test
+		search = first;
+		while(search!=NULL){
+			printf("num: %lu\n",search->num);
+			printf("index: %lu\n",search->index);
+			search = search->next;
+		}
+		printf("tail: %lu\n",tail->index);
+#endif
+	i++;
 	}
 #endif
 }
@@ -106,7 +131,7 @@ int main(void)
 #ifdef merge
 void merge_sort(list *l,long int p,long int r){
 	if(p<r){
-		long int q = (p+r)/2;
+		long int q = (long int)((p+r)/2);
 		merge_sort(l,p,q);
 		merge_sort(l,q+1,r);
 		merge_(l,p,q,r);
@@ -115,6 +140,7 @@ void merge_sort(list *l,long int p,long int r){
 
 void merge_(list *l,long int p,long int q,long int r){
 	list *first = l;
+	list *temp;
 	long int n1 = q-p+1;
 	long int n2 = r-q;
 	
@@ -122,29 +148,35 @@ void merge_(list *l,long int p,long int q,long int r){
 	long int R[n2+1];
 
 	long int i,j,k;
-	for(i=1;i<=n1;i++)
-		L[i] = find_list(p+i-1,first);
+	for(i=1;i<=n1;i++){
+		temp = find_list(p+i-1,first);
+		L[i-1] = temp->num;
+	}
 
+	first = l;
 	for(j=1;j<=n2;j++)
-		R[j] = find_list(q+j,first);
+	{
+		temp = find_list(q+j,first);
+		R[j-1] = temp->num;
+	}
 
-	L[n1+1] = limit;
-	R[n2+1] = limit;
+	L[n1] = limit;
+	R[n2] = limit;
 
-	j=1;
-	i=1;
+	j=0;
+	i=0;
 
 	first = l;
 	for(k=p;k<=r;k++){
-		if(L[i]<R[j]){
-			find_list(k,first);
-			first->num = L[i];
+		if(L[i]<=R[j]){
+			temp = find_list(k,first);
+			temp->num = L[i];
 			first = l;
 			i++;
 		}
 		else{
-			find_list(k,first);
-			first->num = R[i];
+			temp = find_list(k,first);
+			temp->num = R[i];
 			first = l;
 			j++;
 		}
