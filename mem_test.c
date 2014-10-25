@@ -38,6 +38,8 @@ int main(void)
 {
 	int j;
 
+	unsigned long int a[100000];
+
 	unsigned long int num = 0;
 	
 	unsigned long int increase=1;	//increase memory
@@ -47,8 +49,8 @@ int main(void)
 	list *prev;
 	list *tail;
 	list *search;
-	//for(j=0;j<10000;j++)
-		first = (list *)malloc(100000);
+	//for(j=0;j<100;j++)
+		first = (list *)malloc(8388608);
 	first->index = 0;
 	first->num = num;
 	first->next = NULL;
@@ -56,11 +58,11 @@ int main(void)
 	tail = first;	
 
 	//insert and sort
-	while(increase!=50000){
+	while(increase!=100000){
 		list *new;
 	//	list *_test;
-		//for(j=0;j<10000;j++)
-		new = (list *)malloc(100000);
+	//for(j=0;j<100;j++)
+		new = (list *)malloc(8388608);
 		new->index = 0;
 		new->num = ++num;
 		new->next = NULL;
