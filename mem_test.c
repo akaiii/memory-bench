@@ -2,9 +2,10 @@
 #include <stdlib.h>
 #include <time.h>
 
+//#define test2
 //#define test
-//#define swap
-//#define merge
+#define swap
+#define merge
 
 #define max(a,b) \
 	a->num>b->num?a:b
@@ -21,7 +22,7 @@ typedef struct list{
 }list;
 
 inline void link(list *a,list *b){a->next = b;}
-inline void revision(list *a,unsigned long int b)
+inline void revision(list *a)
 	{while(a!=NULL){a->index+=1;a=a->next;}}
 inline int re(list *a,list *b){return (a==b)?1:0;}
 inline list * find_list(unsigned long int a,list *b)
@@ -36,6 +37,8 @@ void merge_(list *,unsigned long int,unsigned long int,unsigned long int);
 int main(void)
 {
 	int j;
+
+	unsigned long int num = 0;
 	
 	unsigned long int increase=1;	//increase memory
 	
@@ -44,72 +47,82 @@ int main(void)
 	list *prev;
 	list *tail;
 	list *search;
-	for(j=0;j<10000;j++)
-		first = (list *)malloc(sizeof(list *));
+	//for(j=0;j<10000;j++)
+		first = (list *)malloc(100000);
 	first->index = 0;
-	first->num = rand()%10000+1;
+	first->num = num;
 	first->next = NULL;
 	prev = first;
 	tail = first;	
 
 	//insert and sort
-	while(increase!=15000){
+	while(increase!=50000){
 		list *new;
-		for(j=0;j<10000;j++)
-		new = (list *)malloc(sizeof(list *));
+	//	list *_test;
+		//for(j=0;j<10000;j++)
+		new = (list *)malloc(100000);
 		new->index = 0;
-		new->num = rand()%10000+1;
+		new->num = ++num;
 		new->next = NULL;
 
+	//	_test = new;
+		
 		search = first;
-		list *_next;
-		if(first->next!=NULL)
+	//	list *_next;
+/*		if(first->next!=NULL)
 			_next = search->next;
 
-		unsigned long int index=0;
-		while(search!=NULL){
-			if(search->next==NULL){
-				//list *temp = max(new,search);
+*/	//	unsigned long int index=0;
+	//	while(search!=NULL){
+		//	if(re(new,max(new,search))){
+				link(new,search);
+				revision(search);
+				first = new;
+	//			break;
+		//	}
+/*			else if(search->next==NULL){
 				new->index = (re(new,min(new,search)))+index;
-				link(max(prev,new),max(search,new));
+				if(first->next!=NULL)
+					link(prev,max(search,new));
 				link(max(search,new),min(search,new));
 
 				if(re(new,max(new,search)))
-					revision(search,0);
+					revision(search);
 				tail = min(new,search);
 				break;
 			}
-			if(re(search,max(search,new))&&re(_next,min(_next,new))){
+			else if(re(search,max(search,new))&&re(_next,min(_next,new))){
 				link(search,new);
 				link(new,_next);
 				new->index+=index;
-				revision(new,0);
-				break;
-			}
-			if(re(new,max(new,search))){
-				first = new;
-				revision(search,0);
-				link(new,search);
+				revision(new);
 				break;
 			}
 			index++;
 			prev = search;
 			search = search->next;
-			_next = _next->next;
-		}
-		if(first->next==NULL)
-			first = max(search,new) ; 
+			_next = _next->next;*/
+	//	}
+		/*if(first->next==NULL)
+			first = max(search,new) ; */
 		increase++;
+#ifdef test1
+		printf("new: %lu num: %lu\n",_test->index,_test->num);
+
+#endif
 	}
-//	while(1){}
-#ifdef test
+#ifdef test2
+		printf("======================================================\n\n\n");
 		search = first;
 		while(search!=NULL){
 			printf("num: %lu\n",search->num);
-			printf("index: %lu\n",search->index);
+			//if(search->index!=search->index-1)
+			//	printf("error: \n");
+	//		printf("index: %lu\n",search->index);
 			search = search->next;
 		}
-		printf("tail: %lu\n",tail->index);
+	//	printf("tail: %lu\n",tail->index);
+//	while(1){}
 #endif
 
 #ifdef swap
@@ -118,14 +131,15 @@ int main(void)
 	while(1){
 		merge_sort(first,0,tail->index);
 
-#ifdef test
+#ifdef test2
+		printf("======================================================\n\n\n");
 		search = first;
 		while(search!=NULL){
 			printf("num: %lu\n",search->num);
-			printf("index: %lu\n",search->index);
+		//	printf("index: %lu\n",search->index);
 			search = search->next;
 		}
-		printf("tail: %lu\n",tail->index);
+		//printf("tail: %lu\n",tail->index);
 #endif
 	i++;
 	}
@@ -180,7 +194,7 @@ void merge_(list *l,unsigned long int p,unsigned long int q,unsigned long int r)
 		}
 		else{
 			temp = find_list(k,first);
-			temp->num = R[i];
+			temp->num = R[j];
 			first = l;
 			j++;
 		}
