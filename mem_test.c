@@ -7,11 +7,13 @@
 #define swap
 #define merge
 
+#ifdef random
 #define max(a,b) \
 	a->num>b->num?a:b
 
 #define min(a,b) \
 	a->num<b->num?a:b
+#endif
 
 #define limit 999999999999999
 
@@ -21,10 +23,10 @@ typedef struct list{
 	struct list *next;
 }list;
 
-inline void link(list *a,list *b){a->next = b;}
-inline void revision(list *a)
-	{while(a!=NULL){a->index+=1;a=a->next;}}
-inline int re(list *a,list *b){return (a==b)?1:0;}
+//inline void link(list *a,list *b){a->next = b;}
+//inline void revision(list *a)
+//	{while(a!=NULL){a->index+=1;a=a->next;}}
+//inline int re(list *a,list *b){return (a==b)?1:0;}
 inline list * find_list(unsigned long int a,list *b)
 	{while(b->index!=a)b=b->next;
 	return b;}
@@ -38,9 +40,9 @@ int main(void)
 {
 	int j;
 
-	unsigned long int a[100000];
-
 	unsigned long int num = 0;
+
+	unsigned long int temp = num;
 	
 	unsigned long int increase=1;	//increase memory
 	
@@ -63,13 +65,14 @@ int main(void)
 	//	list *_test;
 	//for(j=0;j<100;j++)
 		new = (list *)malloc(8388608);
-		new->index = 0;
-		new->num = ++num;
-		new->next = NULL;
+		new->index = ++num;
+		new->num = new->index;
+		new->next = first;
+		first = new;
 
 	//	_test = new;
 		
-		search = first;
+	//	search = first;
 	//	list *_next;
 /*		if(first->next!=NULL)
 			_next = search->next;
@@ -77,9 +80,9 @@ int main(void)
 */	//	unsigned long int index=0;
 	//	while(search!=NULL){
 		//	if(re(new,max(new,search))){
-				link(new,search);
-				revision(search);
-				first = new;
+//				link(new,search);
+//				revision(search);
+//				first = new;
 	//			break;
 		//	}
 /*			else if(search->next==NULL){
