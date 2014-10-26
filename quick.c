@@ -32,8 +32,8 @@ inline list * find_list(unsigned long int a,list *b)
 	return b;}
 
 #ifdef merge
-void merge_sort(list *,unsigned long int,unsigned long int);
-void merge_(list *,unsigned long int,unsigned long int,unsigned long int);
+void merge_sort(list *,unsigned long int,unsigned long int,int);
+void merge_(list *,unsigned long int,unsigned long int,unsigned long int,int);
 #endif
 
 int main(void)
@@ -112,8 +112,8 @@ int main(void)
 void merge_sort(list *l,unsigned long int p,unsigned long int r,int x){
 	if(p<r){
 		unsigned long int q = (unsigned long int)((p+r)/2);
-		merge_sort(l,p,q);
-		merge_sort(l,q+1,r);
+		merge_sort(l,p,q,x);
+		merge_sort(l,q+1,r,x);
 		merge_(l,p,q,r,x);
 	}
 }
