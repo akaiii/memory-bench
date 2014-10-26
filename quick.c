@@ -8,8 +8,8 @@ typedef struct list{
 	struct list *next;
 }list;
 
-inline void revision(list *a){while(a!=NULL)a=a->next;}
-
+inline void revision(list *a){while(a!=NULL){a->num++;a=a->next;}}
+inline void revision_(list *a){while(a!=NULL){a->num--;a=a->next;}}
 
 int main(void)
 {
@@ -31,6 +31,7 @@ int main(void)
 
 	while(1){
 		revision(first);
+		revision_(first);
 	}
 }
 
