@@ -72,7 +72,7 @@ int main(void)
 
 	//	_test = new;
 		
-	//	search = first;
+		search = first;
 	//	list *_next;
 /*		if(first->next!=NULL)
 			_next = search->next;
