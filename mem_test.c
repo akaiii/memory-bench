@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-//#define test2
+#define test2
 //#define test
 #define swap
 #define merge
@@ -81,7 +81,7 @@ int main(void)
 	//	while(search!=NULL){
 		//	if(re(new,max(new,search))){
 				link(new,search);
-				revision(search);
+				//revision(search);
 				first = new;
 	//			break;
 		//	}
@@ -134,9 +134,9 @@ int main(void)
 	int i = 0 ;
 	//use swap
 	while(1){
-		merge_sort(first,0,tail->index);
-
-#ifdef test2
+	//	merge_sort(first,0,tail->index);
+		revision(first);
+#ifdef test
 		printf("======================================================\n\n\n");
 		search = first;
 		while(search!=NULL){

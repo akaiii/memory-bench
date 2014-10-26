@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-//#define test2
+#define test2
 //#define test
 #define swap
 #define merge
@@ -23,17 +23,17 @@ typedef struct list{
 	struct list *next;
 }list;
 
-//inline void link(list *a,list *b){a->next = b;}
-//inline void revision(list *a)
-//	{while(a!=NULL){a->index+=1;a=a->next;}}
+inline void link(list *a,list *b){a->next = b;}
+inline void revision(list *a)
+	{while(a!=NULL){a->index+=1;a=a->next;}}
 //inline int re(list *a,list *b){return (a==b)?1:0;}
 inline list * find_list(unsigned long int a,list *b)
 	{while(b->index!=a)b=b->next;
 	return b;}
 
 #ifdef merge
-void merge_sort(list *,unsigned long int,unsigned long int,int);
-void merge_(list *,unsigned long int,unsigned long int,unsigned long int,int);
+void merge_sort(list *,unsigned long int,unsigned long int);
+void merge_(list *,unsigned long int,unsigned long int,unsigned long int);
 #endif
 
 int main(void)
@@ -62,11 +62,54 @@ int main(void)
 	//insert and sort
 	while(increase!=100000){
 		list *new;
+	//	list *_test;
+	//for(j=0;j<100;j++)
 		new = (list *)malloc(8388608);
 		new->index = ++num;
 		new->num = new->index;
-		new->next = first;
-		first = new;
+		new->next = NULL;
+	//	first = new;
+
+	//	_test = new;
+		
+		search = first;
+	//	list *_next;
+/*		if(first->next!=NULL)
+			_next = search->next;
+
+*/	//	unsigned long int index=0;
+	//	while(search!=NULL){
+		//	if(re(new,max(new,search))){
+				link(new,search);
+				//revision(search);
+				first = new;
+	//			break;
+		//	}
+/*			else if(search->next==NULL){
+				new->index = (re(new,min(new,search)))+index;
+				if(first->next!=NULL)
+					link(prev,max(search,new));
+				link(max(search,new),min(search,new));
+
+				if(re(new,max(new,search)))
+					revision(search);
+				tail = min(new,search);
+				break;
+			}
+			else if(re(search,max(search,new))&&re(_next,min(_next,new))){
+				link(search,new);
+				link(new,_next);
+				new->index+=index;
+				revision(new);
+				break;
+			}
+			index++;
+			prev = search;
+			search = search->next;
+			_next = _next->next;*/
+	//	}
+		/*if(first->next==NULL)
+			first = max(search,new) ; */
 		increase++;
 #ifdef test1
 		printf("new: %lu num: %lu\n",_test->index,_test->num);
@@ -91,9 +134,9 @@ int main(void)
 	int i = 0 ;
 	//use swap
 	while(1){
-		merge_sort(first,0,tail->index,1);
-		merge_sort(first,0,tail->index,0);
-#ifdef test2
+	//	merge_sort(first,0,tail->index);
+		revision(first);
+#ifdef test
 		printf("======================================================\n\n\n");
 		search = first;
 		while(search!=NULL){
@@ -109,16 +152,16 @@ int main(void)
 }
 
 #ifdef merge
-void merge_sort(list *l,unsigned long int p,unsigned long int r,int x){
+void merge_sort(list *l,unsigned long int p,unsigned long int r){
 	if(p<r){
 		unsigned long int q = (unsigned long int)((p+r)/2);
-		merge_sort(l,p,q,x);
-		merge_sort(l,q+1,r,x);
-		merge_(l,p,q,r,x);
+		merge_sort(l,p,q);
+		merge_sort(l,q+1,r);
+		merge_(l,p,q,r);
 	}
 }
 
-void merge_(list *l,unsigned long int p,unsigned long int q,unsigned long int r,int x){
+void merge_(list *l,unsigned long int p,unsigned long int q,unsigned long int r){
 	list *first = l;
 	list *temp;
 	unsigned long int n1 = q-p+1;
@@ -148,33 +191,17 @@ void merge_(list *l,unsigned long int p,unsigned long int q,unsigned long int r,
 
 	first = l;
 	for(k=p;k<=r;k++){
-		if(x){
-			if(L[i]<=R[j]){
-				temp = find_list(k,first);
-				temp->num = L[i];
-				first = l;
-				i++;
-			}
-			else{
-				temp = find_list(k,first);
-				temp->num = R[j];
-				first = l;
-				j++;
-			}
+		if(L[i]<=R[j]){
+			temp = find_list(k,first);
+			temp->num = L[i];
+			first = l;
+			i++;
 		}
 		else{
-			if(L[i]<=R[j]){
-				temp = find_list(k,first);
-				temp->num = L[i];
-				first = l;
-				i++;
-			}
-			else{
-				temp = find_list(k,first);
-				temp->num = R[j];
-				first = l;
-				j++;
-			}
+			temp = find_list(k,first);
+			temp->num = R[j];
+			first = l;
+			j++;
 		}
 	}
 }
