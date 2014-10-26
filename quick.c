@@ -28,10 +28,12 @@ int main(void)
 		increase++;
 	}
 		
-
+	list *temp;
 	while(1){
-		revision(first);
-		revision_(first);
+		temp = first;
+		revision(temp);
+		temp = first;
+		revision_(temp);
 	}
 }
 
