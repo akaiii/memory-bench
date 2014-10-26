@@ -19,7 +19,7 @@ int main(void)
 	list *first;
 
 	//insert and sort
-	while(increase!=100000){
+	while(increase!=70000){
 		list *new;
 		new = (list *)malloc(8388608);
 		new->num = 0;
