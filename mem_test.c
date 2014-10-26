@@ -23,9 +23,9 @@ typedef struct list{
 	struct list *next;
 }list;
 
-//inline void link(list *a,list *b){a->next = b;}
-//inline void revision(list *a)
-//	{while(a!=NULL){a->index+=1;a=a->next;}}
+inline void link(list *a,list *b){a->next = b;}
+inline void revision(list *a)
+	{while(a!=NULL){a->index+=1;a=a->next;}}
 //inline int re(list *a,list *b){return (a==b)?1:0;}
 inline list * find_list(unsigned long int a,list *b)
 	{while(b->index!=a)b=b->next;
@@ -67,8 +67,8 @@ int main(void)
 		new = (list *)malloc(8388608);
 		new->index = ++num;
 		new->num = new->index;
-		new->next = first;
-		first = new;
+		new->next = NULL;
+	//	first = new;
 
 	//	_test = new;
 		
@@ -80,9 +80,9 @@ int main(void)
 */	//	unsigned long int index=0;
 	//	while(search!=NULL){
 		//	if(re(new,max(new,search))){
-//				link(new,search);
-//				revision(search);
-//				first = new;
+				link(new,search);
+				revision(search);
+				first = new;
 	//			break;
 		//	}
 /*			else if(search->next==NULL){
