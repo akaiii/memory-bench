@@ -4,19 +4,24 @@
 
 
 typedef struct list{
-	unsigned long int num;
+	long int num;
 	struct list *next;
 }list;
 
 inline void revision(list *a){while(a->next!=NULL){a->num++;a=a->next;}}
 inline void revision_(list *a){while(a->next!=NULL){a->num--;a=a->next;}}
 
+void excu_time();
+
 int main(void)
 {
 	
-	unsigned long int increase=1;	//increase memory
+	long int increase=1;	//increase memory
 	
 	list *first;
+	first = (list *)malloc(8388608);
+	first->num = 0;
+	first->next = NULL;
 
 	//insert and sort
 	while(increase!=70000){
@@ -35,5 +40,10 @@ int main(void)
 		temp = first;
 		revision_(temp);
 	}
+}
+
+void excu_time(){
+
+
 }
 
