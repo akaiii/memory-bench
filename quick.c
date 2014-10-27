@@ -11,22 +11,20 @@ typedef struct list{
 inline void revision(list *a){while(a->next!=NULL){a->num++;a=a->next;}}
 inline void revision_(list *a){while(a->next!=NULL){a->num--;a=a->next;}}
 
-void excu_time();
 
 int main(void)
 {
-	
 	long int increase=1;	//increase memory
 	
 	list *first;
-	first = (list *)malloc(8388608);
+	first = malloc(2000000);
 	first->num = 0;
 	first->next = NULL;
 
 	//insert and sort
-	while(increase!=70000){
+	while(increase!=100000){
 		list *new;
-		new = (list *)malloc(8388608);
+		new = malloc(2000000);
 		new->num = 0;
 		new->next = first;
 		first = new;
@@ -34,16 +32,16 @@ int main(void)
 	}
 		
 	list *temp;
-	while(1){
+	increase = 0;
+	time_t start_time = time(NULL);
+	while(increase!=1){
 		temp = first;
 		revision(temp);
 		temp = first;
 		revision_(temp);
+		increase++;
 	}
-}
 
-void excu_time(){
-
-
+	printf("Runing time: %g sec\n",difftime(time(NULL),start_time));
 }
 
