@@ -4,7 +4,7 @@
 
 
 typedef struct list{
-	long int num;
+	int num;
 	struct list *next;
 }list;
 
@@ -14,23 +14,21 @@ inline void revision_(list *a){while(a->next!=NULL){a->num--;a=a->next;}}
 
 int main(void)
 {
-	long int increase=1;	//increase memory
-	
+	int increase=1;	//increase memory
+	printf("%d\n",sizeof(list*));
 	list *first;
-	first = malloc(2000000);
+	first = malloc(sizeof(list*));
 	first->num = 0;
 	first->next = NULL;
-
 	//insert and sort
-	while(increase!=100000){
+	while(increase!=10000000){
 		list *new;
-		new = malloc(2000000);
+		new = malloc(sizeof(list*));
 		new->num = 0;
 		new->next = first;
 		first = new;
 		increase++;
 	}
-		
 	list *temp;
 	increase = 0;
 	time_t start_time = time(NULL);
